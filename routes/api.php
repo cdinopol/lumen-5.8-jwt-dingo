@@ -27,6 +27,8 @@ $api->version('v1', function ($api) {
 	    $api->get('/test', function() {
 	        return 'hello world!';
 	    });
+
+	    $api->get('/user_test', 'App\Http\Controllers\ExampleController@get_user');
 	});
 
 });

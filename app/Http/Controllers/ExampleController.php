@@ -2,17 +2,10 @@
 
 namespace App\Http\Controllers;
 
-class ExampleController extends Controller
+class ExampleController extends ApiController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function get_user()
     {
-        //
+        return $this->respondSuccess('Good job! Good luck with your API!', $this->user);
     }
-
-    //
 }

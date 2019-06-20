@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\JWTAuth;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
     /**
      * @var \Tymon\JWTAuth\JWTAuth
