@@ -8,7 +8,8 @@ Nothing fancy. Basic integration of [JWT Auth](https://github.com/tymondesigns/j
 - You may delete `.git` folder if you get this code via `git clone`
 
 - Copy `.env.example` and rename to `.env`
-    - Add the following at the bottom:
+    - setup your db (create your db first)
+    - add the following at the bottom:
     ```
     API_PREFIX=api
     API_VERSION=v1
@@ -16,31 +17,33 @@ Nothing fancy. Basic integration of [JWT Auth](https://github.com/tymondesigns/j
 
 - Run `composer install`
 - Run `php artisan key:generate`
-- Run `php artisan jwt:generate`
+- Run `php artisan jwt:secret`
 - Run `php artisan migrate --seed`
 
 # Test It!
 
-Use postman to simplify your life.
+- Run `php artisan serve`
 
-POST URL: 
+- Use postman to simplify your life.
 
-```
-http://localhost:8000/api/auth/login
-```
+    POST URL: 
 
-BODY form-data:
+    ```
+    http://localhost:8000/api/auth/login
+    ```
 
-```
-email: admin@admin.com
-password: password
-```
+    BODY form-data:
 
-Response:
+    ```
+    email: admin@admin.com
+    password: password
+    ```
 
-```
-{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9rdWxiYWhpbmFtLmxvY2FsXC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNTYxMDAwNjQ2LCJleHAiOjE1NjEwMDQyNDYsIm5iZiI6MTU2MTAwMDY0NiwianRpIjoiOXFNQjlyV2R2S01pek9LQiIsInN1YiI6MSwicHJ2IjoiODdlMGFmMWVmOWZkMTU4MTJmZGVjOTcxNTNhMTRlMGIwNDc1NDZhYSJ9.C5iQ98SOeqNn52bBjnkNQYQqzZuSByjzo3y6D1iEzfk"}
-```
+    Response:
+
+    ```
+    {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9rdWxiYWhpbmFtLmxvY2FsXC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNTYxMDAwNjQ2LCJleHAiOjE1NjEwMDQyNDYsIm5iZiI6MTU2MTAwMDY0NiwianRpIjoiOXFNQjlyV2R2S01pek9LQiIsInN1YiI6MSwicHJ2IjoiODdlMGFmMWVmOWZkMTU4MTJmZGVjOTcxNTNhMTRlMGIwNDc1NDZhYSJ9.C5iQ98SOeqNn52bBjnkNQYQqzZuSByjzo3y6D1iEzfk"}
+    ```
 
 ## License
 ```
