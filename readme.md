@@ -1,21 +1,49 @@
-# Lumen PHP Framework
+# Lumen 5.8 with JWTAuth & Dingo
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/lumen-framework/v/unstable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+Nothing fancy. Basic integration of [JWT Auth](https://github.com/tymondesigns/jwt-auth) and [Dingo API](https://github.com/dingo/api) into Lumen 5.8
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+## Quick Start
 
-## Official Documentation
+- Clone this repo or download it's release archive and extract it somewhere
+- You may delete `.git` folder if you get this code via `git clone`
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+- Copy `.env.example` and rename to `.env`
+    - Add the following at the bottom:
+    ```
+    API_PREFIX=api
+    API_VERSION=v1
+    ```
 
-## Security Vulnerabilities
+- Run `composer install`
+- Run `php artisan key:generate`
+- Run `php artisan jwt:generate`
+- Run `php artisan migrate --seed`
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+# Test It!
+
+Use postman to simplify your life.
+
+POST URL: 
+
+```
+http://localhost:8000/api/auth/login
+```
+
+BODY form-data:
+
+```
+email: admin@admin.com
+password: password
+```
+
+Response:
+
+```
+{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9rdWxiYWhpbmFtLmxvY2FsXC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNTYxMDAwNjQ2LCJleHAiOjE1NjEwMDQyNDYsIm5iZiI6MTU2MTAwMDY0NiwianRpIjoiOXFNQjlyV2R2S01pek9LQiIsInN1YiI6MSwicHJ2IjoiODdlMGFmMWVmOWZkMTU4MTJmZGVjOTcxNTNhMTRlMGIwNDc1NDZhYSJ9.C5iQ98SOeqNn52bBjnkNQYQqzZuSByjzo3y6D1iEzfk"}
+```
 
 ## License
-
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+Laravel and Lumen is a trademark of Taylor Otwell
+Sean Tymon officially holds "Laravel JWT" license
+```
