@@ -24,15 +24,15 @@ Nothing fancy. Basic integration of [JWT Auth](https://github.com/tymondesigns/j
 # Test It! 
 `Use postman to simplify your life.`
 
-- Login
+1. AUTHENTICATE
 
-    POST: 
+    Post: 
 
     ```
     http://localhost:8000/api/auth/login
     ```
 
-    BODY form-data:
+    Body form-data:
 
     ```
     email: admin@admin.com
@@ -45,9 +45,9 @@ Nothing fancy. Basic integration of [JWT Auth](https://github.com/tymondesigns/j
       {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9rdWxiYWhpbmFtLmxvY2FsXC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNTYxMDAwNjQ2LCJleHAiOjE1NjEwMDQyNDYsIm5iZiI6MTU2MTAwMDY0NiwianRpIjoiOXFNQjlyV2R2S01pek9LQiIsInN1YiI6MSwicHJ2IjoiODdlMGFmMWVmOWZkMTU4MTJmZGVjOTcxNTNhMTRlMGIwNDc1NDZhYSJ9.C5iQ98SOeqNn52bBjnkNQYQqzZuSByjzo3y6D1iEzfk"}
     ```
 
-- Test Demo Function
+2. Demo Function
 
-    GET: 
+    Get: 
 
     ```
     http://localhost:8000/api/user_test
