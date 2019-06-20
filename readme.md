@@ -19,14 +19,14 @@ Nothing fancy. Basic integration of [JWT Auth](https://github.com/tymondesigns/j
 - Run `php artisan key:generate`
 - Run `php artisan jwt:secret`
 - Run `php artisan migrate --seed`
-
-# Test It!
-
 - Run `php artisan serve`
 
-- Use postman to simplify your life.
+# Test It! 
+`Use postman to simplify your life.`
 
-    POST URL: 
+- Login
+
+    POST: 
 
     ```
     http://localhost:8000/api/auth/login
@@ -42,7 +42,37 @@ Nothing fancy. Basic integration of [JWT Auth](https://github.com/tymondesigns/j
     Response:
 
     ```
-    {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9rdWxiYWhpbmFtLmxvY2FsXC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNTYxMDAwNjQ2LCJleHAiOjE1NjEwMDQyNDYsIm5iZiI6MTU2MTAwMDY0NiwianRpIjoiOXFNQjlyV2R2S01pek9LQiIsInN1YiI6MSwicHJ2IjoiODdlMGFmMWVmOWZkMTU4MTJmZGVjOTcxNTNhMTRlMGIwNDc1NDZhYSJ9.C5iQ98SOeqNn52bBjnkNQYQqzZuSByjzo3y6D1iEzfk"}
+      {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9rdWxiYWhpbmFtLmxvY2FsXC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNTYxMDAwNjQ2LCJleHAiOjE1NjEwMDQyNDYsIm5iZiI6MTU2MTAwMDY0NiwianRpIjoiOXFNQjlyV2R2S01pek9LQiIsInN1YiI6MSwicHJ2IjoiODdlMGFmMWVmOWZkMTU4MTJmZGVjOTcxNTNhMTRlMGIwNDc1NDZhYSJ9.C5iQ98SOeqNn52bBjnkNQYQqzZuSByjzo3y6D1iEzfk"}
+    ```
+
+- Test Demo Function
+
+    GET: 
+
+    ```
+    http://localhost:8000/api/user_test
+    ```
+
+    Authorization (Type: Bearer Token):
+    
+    ```
+    use the token generated from logging in.
+    ```
+
+    Response: 
+    
+    ```
+    {
+        "message": "Good job! Good luck with your API!",
+        "data": {
+            "id": 1,
+            "name": "admin",
+            "email": "admin@admin.com",
+            "role": 99,
+            "created_at": "2019-06-20 06:52:17",
+            "updated_at": "2019-06-20 06:52:17"
+        }
+    }
     ```
 
 ## License
