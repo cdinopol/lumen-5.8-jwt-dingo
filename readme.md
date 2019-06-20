@@ -1,4 +1,4 @@
-# Lumen 5.8 with JWTAuth & Dingo
+# Lumen 5.8 with JWTAuth & Dingo Boilerplate
 
 Nothing fancy. Basic integration of [JWT Auth](https://github.com/tymondesigns/jwt-auth) and [Dingo API](https://github.com/dingo/api) into Lumen 5.8
 
