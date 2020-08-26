@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+  web_api:
+    build: .
+    command: >
+      sh -c "
+        php artisan jwt:secret
+        /usr/sbin/apache2ctl -D FOREGROUND"
+    volumes:
+        - .env:/var/www/html/.env
+        - ./lumen/app:/var/www/html/app
+        - ./lumen/config:/var/www/html/config
+        - ./lumen/routes:/var/www/html/routes
+        - ./lumen/resources:/var/www/html/resources
+    expose:
+        - 80
+    ports:
+      - 8080:80

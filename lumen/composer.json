@@ -9,7 +9,9 @@
         "dingo/api": "^2",
         "flipbox/lumen-generator": "^5.6",
         "laravel/lumen-framework": "5.8.*",
-        "tymon/jwt-auth": "1.0.*@dev"
+        "tymon/jwt-auth": "1.0.*@dev",
+        "illuminate/mail": "^5.8",
+        "nordsoftware/lumen-cors": "^3.3"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",

@@ -1,82 +1,159 @@
-# Lumen 5.8 with JWTAuth & Dingo Boilerplate
+WEB API USING DOCKERIZED LUMEN + JWT & DINGO
+============================================
 
-Nothing fancy. Basic integration of [JWT Auth](https://github.com/tymondesigns/jwt-auth) and [Dingo API](https://github.com/dingo/api) into Lumen 5.8
+# 1. Installations
 
-## Quick Start
+### 1. Setup Server (Ubuntu 18+)
+- Install minimum dependencies
+```sh
+sudo apt-get update && sudo apt-get upgrade -y
+sudo apt-get install -y apache2 git tmux
+```
 
-- Clone this repo or download it's release archive and extract it somewhere
-- You may delete `.git` folder if you get this code via `git clone`
+### 2. Download project repo
+```sh
+cd ~/
+git clone git@github.com:cdinopol/lumen-5.8-jwt-dingo.git
+```
 
-- Copy `.env.example` and rename to `.env`
-    - setup your db (create your db first)
-    - add the following at the bottom:
-    ```
-    API_PREFIX=api
-    API_VERSION=v1
-    ```
+### 3. Install Docker (Linux)
+```sh
+cd ~/lumen-5.8-jwt-dingo/scripts
+./docker_install.sh
+```
 
-- Run `composer install`
-- Run `php artisan key:generate`
-- Run `php artisan jwt:secret`
-- Run `php artisan migrate --seed`
-- Run `php artisan serve`
+---
 
-# Test It! 
+# 2. Start
+
+### 1. You may want to delete .git folder if you get this code via git clone
+### 2. Setup your database
+### 3. Copy .env.example and rename to .env
+```
+DB_CONNECTION=mysql
+DB_HOST=your.db.host
+DB_PORT=3306
+DB_DATABASE=database
+DB_USERNAME=username
+DB_PASSWORD=password
+```
+
+### 4. Build
+```sh
+cd ~/lumen-5.8-jwt-dingo/
+docker-compose build
+```
+
+### 5. Run
+```sh
+cd ~/lumen-5.8-jwt-dingo/
+docker-compose up
+```
+
+- to start (tmux)
+```sh
+cd ~/lumen-5.8-jwt-dingo/scripts/
+tmux_start.sh
+```
+
+- to stop (tmux)
+```sh
+cd ~/lumen-5.8-jwt-dingo/scripts/
+tmux_stop.sh
+```
+
+---
+
+# 3. Test It!
 `Use postman to simplify your life.`
 
-1. AUTHENTICATE
 
-    Post: 
+### 1. Register
+- Post: 
+```
+http://localhost:8000/api/auth/register
+```
 
-    ```
-    http://localhost:8000/api/auth/login
-    ```
+- Body form-data:
+```
+email: admin@admin.com
+password: password
+```
 
-    Body form-data:
+- Response:
+```
+Code: 201
+Content:
+registration success
+```
 
-    ```
-    email: admin@admin.com
-    password: password
-    ```
+### 1. Login
+- Post: 
+```
+http://localhost:8000/api/auth/login
+```
 
-    Response:
+- Body form-data:
+```
+email: admin@admin.com
+password: password
+```
 
-    ```
-      {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9rdWxiYWhpbmFtLmxvY2FsXC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNTYxMDAwNjQ2LCJleHAiOjE1NjEwMDQyNDYsIm5iZiI6MTU2MTAwMDY0NiwianRpIjoiOXFNQjlyV2R2S01pek9LQiIsInN1YiI6MSwicHJ2IjoiODdlMGFmMWVmOWZkMTU4MTJmZGVjOTcxNTNhMTRlMGIwNDc1NDZhYSJ9.C5iQ98SOeqNn52bBjnkNQYQqzZuSByjzo3y6D1iEzfk"}
-    ```
+- Response:
+```
+Code: 200
+Content:
+{
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODA4MFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTU5ODQzMDExMSwiZXhwIjoxNTk4NDMzNzExLCJuYmYiOjE1OTg0MzAxMTEsImp0aSI6IjVaUkxaVkJYd2x6UkZvdXUiLCJzdWIiOjIwMDAwMTgsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.iDln2EULa3i1Mz_BPFq9d0dueJ9rW3qScMZzv-1YgKw",
+    "expires_in_epoch": 1598433711,
+    "expires_in_iso": "2020-08-26T09:21:51+0000"
+}
+```
 
-2. Demo Function
+### 3. Demo Function (open - no auth)
+- Get: 
+```
+http://localhost:8080/api/user/list
+```
 
-    Get: 
-
-    ```
-    http://localhost:8000/api/user_test
-    ```
-
-    Authorization (Type: Bearer Token):
-    
-    ```
-    use the token generated from logging in.
-    ```
-
-    Response: 
-    
-    ```
+- Response:
+```
+Code: 200
+Content:
+[
     {
-        "message": "Good job! Good luck with your API!",
-        "data": {
-            "id": 1,
-            "name": "admin",
-            "email": "admin@admin.com",
-            "role": 99,
-            "created_at": "2019-06-20 06:52:17",
-            "updated_at": "2019-06-20 06:52:17"
-        }
+        "email": "admin@admin.com",
+        "password": "password"
     }
-    ```
+]
+```
+
+### 4. Demo Function (auth - token required)
+- Get: 
+```
+http://localhost:8080/api/user/me
+```
+
+- Authorization: Bearer {token}
+```
+use the token generated from logging in.
+```
+
+- Response:
+```
+Code: 200
+Content:
+{
+    "email": "admin@admin.com",
+    "password": "password"
+}
+```
+
+---
 
 ## License
 ```
 Laravel and Lumen is a trademark of Taylor Otwell
 Sean Tymon officially holds "Laravel JWT" license
 ```
+

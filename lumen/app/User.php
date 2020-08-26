@@ -13,13 +13,16 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
 {
     use Authenticatable, Authorizable;
 
+    protected $table = 'login';
+    protected $primaryKey = 'account_id';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'userid', 'email', 'web_password'
     ];
 
     /**
@@ -28,7 +31,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
      * @var array
      */
     protected $hidden = [
-        'password',
+        'account_id', 'web_password',
     ];
 
     /**
@@ -49,5 +52,10 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->web_password; 
     }
 }

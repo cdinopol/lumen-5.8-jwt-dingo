@@ -57,12 +57,13 @@ $app->singleton(
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
+$app->middleware([
+    Nord\Lumen\Cors\CorsMiddleware::class
+]);
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
+    'throttle' => App\Http\Middleware\ThrottleRequests::class,
 ]);
 
 /*
@@ -88,6 +89,14 @@ $app->register(Dingo\Api\Provider\LumenServiceProvider::class);
 
 // Can disable in production
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
+
+// Cors
+$app->register(Nord\Lumen\Cors\CorsServiceProvider::class);
+$app->configure('cors');
+
+// Mail
+// $app->register(Illuminate\Mail\MailServiceProvider::class);
+// $app->configure('mail');
 
 /*
 |--------------------------------------------------------------------------
