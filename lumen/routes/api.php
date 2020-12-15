@@ -26,12 +26,13 @@ $api->version('v1', function ($api) {
             // auth
             $api->group(['prefix' => 'auth', 'namespace' => 'Auth'], function($api) {
                 $api->post('/login', 'AuthController@login');
-                $api->post('/register', 'AuthController@register');
+                
             });
 
             // user
-            $api->group(['prefix' => 'user'], function($api) {
-                $api->get('/list', 'UserController@list');
+            $api->group(['prefix' => 'users'], function($api) {
+                $api->get('/', 'UserController@index');
+                $api->post('/', 'UserController@store');
             });
 
             /*
@@ -48,11 +49,7 @@ $api->version('v1', function ($api) {
                 $api->group(['prefix' => 'auth', 'namespace' => 'Auth'], function($api) {
                     $api->post('/refresh', 'AuthController@refresh');
                     $api->post('/logout', 'AuthController@logout');
-                });
-
-                // user
-                $api->group(['prefix' => 'user'], function($api) {
-                    $api->get('/me', 'UserController@me');
+                    $api->get('/me', 'AuthController@me');
                 });
             });
         });

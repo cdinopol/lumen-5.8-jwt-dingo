@@ -1,19 +1,30 @@
 version: '3.3'
 
 services:
+
+  redis:
+    image: redis:6
+    command: redis-server --appendonly yes
+    expose:
+      - 6379
+    ports:
+      - 6378-6379
+    volumes:
+      - ./data/redis:/data
+
   web_api:
     build: .
     command: >
       sh -c "
         php artisan jwt:secret
         /usr/sbin/apache2ctl -D FOREGROUND"
+    links:
+      - "redis"
     volumes:
-        - .env:/var/www/html/.env
-        - ./lumen/app:/var/www/html/app
-        - ./lumen/config:/var/www/html/config
-        - ./lumen/routes:/var/www/html/routes
-        - ./lumen/resources:/var/www/html/resources
-    expose:
-        - 80
+      - .env:/var/www/html/.env
+      - ./lumen/app:/var/www/html/app
+      - ./lumen/config:/var/www/html/config
+      - ./lumen/routes:/var/www/html/routes
+      - ./lumen/resources:/var/www/html/resources
     ports:
       - 8080:80

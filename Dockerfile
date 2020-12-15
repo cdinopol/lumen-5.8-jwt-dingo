@@ -1,10 +1,10 @@
 # Base image
-FROM php:7.2-apache
+FROM php:7.4-apache
 
-# set main params
+# Set main params
 ENV APP_HOME /var/www/html
 
-# install all the dependencies and enable PHP modules
+# Install all the dependencies and enable PHP modules
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
       procps \
       nano \
@@ -31,45 +31,50 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
-# disable default site and delete all default files inside APP_HOME
+# Disable default site and delete all default files inside APP_HOME
 RUN a2dissite 000-default.conf
 RUN rm -r $APP_HOME
 
-# create document root
+# Create document root
 RUN mkdir -p $APP_HOME/public
 
-# change uid and gid of apache to docker user uid/gid
+# Change uid and gid of apache to docker user uid/gid
 RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 RUN chown -R www-data:www-data $APP_HOME
 
-# put apache and php config for Laravel, enable sites
+# Put apache and php config for Laravel, enable sites
 COPY conf/docker/php.ini /usr/local/etc/php/php.ini
 COPY conf/docker/laravel.conf /etc/apache2/sites-available/laravel.conf
 RUN a2ensite laravel.conf
 
-# enable apache modules
+# Enable apache modules
 RUN a2enmod rewrite
 RUN echo "ServerName localhost" | tee /etc/apache2/conf-available/fqdn.conf && a2enconf fqdn
 
-# install composer
+# Install composer
 RUN curl -s https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/bin/composer
 RUN chmod +x /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-# set working directory
+# Set working directory
 WORKDIR $APP_HOME
 
-# create composer folder for user www-data
+# Create composer folder for user www-data
 RUN mkdir -p /var/www/.composer && chown -R www-data:www-data /var/www/.composer
 
+# Switch user www-data
 USER www-data
 
-# copy source files and config file
+# Copy source files and config file
 COPY --chown=www-data:www-data ./lumen $APP_HOME/
 COPY --chown=www-data:www-data .env $APP_HOME/.env
 
-# install all PHP dependencies
+# Install all PHP dependencies
 RUN COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-interaction --no-progress --no-dev
 
+# Switch user root
 USER root
+
+# Run migration
+RUN php artisan migrate

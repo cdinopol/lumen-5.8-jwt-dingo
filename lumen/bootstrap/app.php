@@ -6,6 +6,8 @@ require_once __DIR__.'/../vendor/autoload.php';
     dirname(__DIR__)
 ))->bootstrap();
 
+date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
+
 /*
 |--------------------------------------------------------------------------
 | Create The Application
@@ -58,7 +60,7 @@ $app->singleton(
 */
 
 $app->middleware([
-    Nord\Lumen\Cors\CorsMiddleware::class
+    Fruitcake\Cors\HandleCors::class
 ]);
 
 $app->routeMiddleware([
@@ -79,7 +81,6 @@ $app->routeMiddleware([
 
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
 
 // JWTAuth
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
@@ -87,12 +88,15 @@ $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 // Dingo
 $app->register(Dingo\Api\Provider\LumenServiceProvider::class);
 
-// Can disable in production
-$app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
-
 // Cors
-$app->register(Nord\Lumen\Cors\CorsServiceProvider::class);
+$app->register(Fruitcake\Cors\CorsServiceProvider::class);
 $app->configure('cors');
+
+// Redis
+$app->register(Illuminate\Redis\RedisServiceProvider::class);
+
+// CLI Helper (can be disabled in production)
+$app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 
 // Mail
 // $app->register(Illuminate\Mail\MailServiceProvider::class);

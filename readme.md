@@ -1,7 +1,7 @@
-WEB API USING DOCKERIZED LUMEN + JWT & DINGO
+LARAVEL LUMEN WITH JWT + DINGO (DOCKERIZED)
 ============================================
 
-# 1. Installations
+# 1. Installation
 
 ### 1. Setup Server (Ubuntu 18+)
 - Install minimum dependencies
@@ -13,12 +13,12 @@ sudo apt-get install -y apache2 git tmux
 ### 2. Download project repo
 ```sh
 cd ~/
-git clone git@github.com:cdinopol/lumen-5.8-jwt-dingo.git
+git clone git@github.com:cdinopol/lumen-jwt-dingo.git
 ```
 
 ### 3. Install Docker (Linux)
 ```sh
-cd ~/lumen-5.8-jwt-dingo/scripts
+cd ~/lumen-jwt-dingo/scripts
 ./docker_install.sh
 ```
 
@@ -27,57 +27,26 @@ cd ~/lumen-5.8-jwt-dingo/scripts
 # 2. Start
 
 ### 1. You may want to delete .git folder if you get this code via git clone
-### 2. Setup your database
-### 3. Copy .env.example and rename to .env
-```
-DB_CONNECTION=mysql
-DB_HOST=your.db.host
-DB_PORT=3306
-DB_DATABASE=database
-DB_USERNAME=username
-DB_PASSWORD=password
-```
-
-### 4. Build
+### 2. Copy .env.example and rename to .env, then update values necessary
+### 3. Run and build docker
 ```sh
-cd ~/lumen-5.8-jwt-dingo/
-docker-compose build
-```
-
-### 5. Run
-```sh
-cd ~/lumen-5.8-jwt-dingo/
-docker-compose up
-```
-
-- to start (tmux)
-```sh
-cd ~/lumen-5.8-jwt-dingo/scripts/
-tmux_start.sh
-```
-
-- to stop (tmux)
-```sh
-cd ~/lumen-5.8-jwt-dingo/scripts/
-tmux_stop.sh
+cd ~/lumen-jwt-dingo/
+docker-compose up --build
 ```
 
 ---
 
-# 3. Test It!
-`Use postman to simplify your life.`
-
+# 3. Test
 
 ### 1. Register
-- Post: 
-```
-http://localhost:8000/api/auth/register
-```
-
-- Body form-data:
-```
-email: admin@admin.com
-password: password
+```sh
+curl --location --request POST 'http://localhost:8080/api/users' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "admin@email.com",
+    "password": "password",
+    "name": "admin"
+}'
 ```
 
 - Response:
@@ -88,15 +57,13 @@ registration success
 ```
 
 ### 1. Login
-- Post: 
-```
-http://localhost:8000/api/auth/login
-```
-
-- Body form-data:
-```
-email: admin@admin.com
-password: password
+```sh
+curl --location --request POST 'http://localhost:8080/api/auth/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "admin@admin.com",
+    "password": "password"
+}'
 ```
 
 - Response:
@@ -111,9 +78,8 @@ Content:
 ```
 
 ### 3. Demo Function (open - no auth)
-- Get: 
-```
-http://localhost:8080/api/user/list
+```sh
+curl --location --request GET 'http://localhost:8080/api/users'
 ```
 
 - Response:
@@ -122,21 +88,21 @@ Code: 200
 Content:
 [
     {
+        "id": 1,
         "email": "admin@admin.com",
-        "password": "password"
+        "name": "admin",
+        "role": 1,
+        "created_at": "2020-11-26T07:35:58.000000Z",
+        "updated_at": "2020-11-26T07:35:58.000000Z"
     }
 ]
 ```
 
 ### 4. Demo Function (auth - token required)
-- Get: 
-```
-http://localhost:8080/api/user/me
-```
-
-- Authorization: Bearer {token}
-```
-use the token generated from logging in.
+```sh
+curl --location --request GET 'http://localhost:8080/api/auth/me' \
+--header ': ' \
+--header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODA4MFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTU5ODQzMDExMSwiZXhwIjoxNTk4NDMzNzExLCJuYmYiOjE1OTg0MzAxMTEsImp0aSI6IjVaUkxaVkJYd2x6UkZvdXUiLCJzdWIiOjIwMDAwMTgsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.iDln2EULa3i1Mz_BPFq9d0dueJ9rW3qScMZzv-1YgKw'
 ```
 
 - Response:
@@ -144,8 +110,12 @@ use the token generated from logging in.
 Code: 200
 Content:
 {
+    "id": 1,
     "email": "admin@admin.com",
-    "password": "password"
+    "name": "admin",
+    "role": 1,
+    "created_at": "2020-11-26T07:35:58.000000Z",
+    "updated_at": "2020-11-26T07:35:58.000000Z"
 }
 ```
 
@@ -156,4 +126,3 @@ Content:
 Laravel and Lumen is a trademark of Taylor Otwell
 Sean Tymon officially holds "Laravel JWT" license
 ```
-

@@ -4,73 +4,57 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Allowed request origins
+    | Laravel CORS Options
     |--------------------------------------------------------------------------
     |
-    | Indicates which origins are allowed to perform requests.
-    | Patterns also accepted, for example *.foo.com
+    | The allowed_methods and allowed_headers options are case-insensitive.
+    |
+    | You don't need to provide both allowed_origins and allowed_origins_patterns.
+    | If one of the strings passed matches, it is considered a valid origin.
+    |
+    | If ['*'] is provided to allowed_methods, allowed_origins or allowed_headers
+    | all methods / origins / headers are allowed.
     |
     */
-
-    'allow_origins' => ['*'],
 
     /*
-    |--------------------------------------------------------------------------
-    | Allowed HTTP headers
-    |--------------------------------------------------------------------------
-    |
-    | Indicates which HTTP headers are allowed.
-    |
-    */
-
-    'allow_headers' => ['*'],
+     * You can enable CORS for 1 or multiple paths.
+     * Example: ['api/*']
+     */
+    'paths' => [],
 
     /*
-    |--------------------------------------------------------------------------
-    | Allowed HTTP methods
-    |--------------------------------------------------------------------------
-    |
-    | Indicates which HTTP methods are allowed.
-    |
+    * Matches the request method. `['*']` allows all methods.
     */
-
-    'allow_methods' => ['*'],
+    'allowed_methods' => ['*'],
 
     /*
-    |--------------------------------------------------------------------------
-    | Whether or not the response can be exposed when credentials are present
-    |--------------------------------------------------------------------------
-    |
-    | Indicates whether or not the response to the request can be exposed when the credentials flag is true.
-    | When used as part of a response to a preflight request, this indicates whether or not the actual request
-    | can be made using credentials.  Note that simple GET requests are not preflighted, and so if a request
-    | is made for a resource with credentials, if this header is not returned with the resource, the response
-    | is ignored by the browser and not returned to web content.
-    |
-    */
-
-    'allow_credentials' => false,
+     * Matches the request origin. `['*']` allows all origins. Wildcards can be used, eg `*.mydomain.com`
+     */
+    'allowed_origins' => ['*'],
 
     /*
-    |--------------------------------------------------------------------------
-    | Exposed headers
-    |--------------------------------------------------------------------------
-    |
-    | Headers that are allowed to be exposed to the web server.
-    |
-    */
-
-    'expose_headers' => [],
+     * Patterns that can be used with `preg_match` to match the origin.
+     */
+    'allowed_origins_patterns' => [],
 
     /*
-    |--------------------------------------------------------------------------
-    | Max age
-    |--------------------------------------------------------------------------
-    |
-    | Indicates how long the results of a preflight request can be cached.
-    |
-    */
+     * Sets the Access-Control-Allow-Headers response header. `['*']` allows all headers.
+     */
+    'allowed_headers' => ['*'],
 
+    /*
+     * Sets the Access-Control-Expose-Headers response header with these headers.
+     */
+    'exposed_headers' => [],
+
+    /*
+     * Sets the Access-Control-Max-Age response header when > 0.
+     */
     'max_age' => 0,
 
+    /*
+     * Sets the Access-Control-Allow-Credentials header.
+     */
+    'supports_credentials' => false,
 ];
