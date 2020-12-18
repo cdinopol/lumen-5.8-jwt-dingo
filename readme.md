@@ -1,5 +1,6 @@
-LUMEN API BOILERPLATE (JWT + DINGO)
-============================================
+LUMEN JWT + DINGO BOILERPLATE
+=============================
+The LUMEN JWT + DINGO BOILERPLATE package is meant to help you jumpstart your Restful API development. The aim of this is to save time setting up general standard configurations like CORS handling, throttling, versioning, etc. This comes with basic functionalities such as user registration, authentication and other demo functions to showcase different types of requests.
 
 ## Quick Start
 
@@ -7,7 +8,7 @@ LUMEN API BOILERPLATE (JWT + DINGO)
 2. Delete `.git` folder if you get this code via `git clone` (opt)
 3. Copy `.env.example` and rename to `.env`, then update values necessary
 4. Run
-- Via Docker
+- Via Docker (requires docker)
 ```sh
 docker-compose up --build
 ```
@@ -26,8 +27,6 @@ cp ../.env .
 # Run
 php artisan serve
 ```
-
----
 
 ## Test 
 
@@ -97,14 +96,10 @@ Content:
 {<user object>}
 ```
 
----
-
 ## Credits
 [Lumen](https://github.com/laravel/lumen) is a trademark of Taylor Otwell.  
-Sean Tymon officially holds ["JWT Auth"](https://github.com/tymondesigns/jwt-auth/) license.  
-Jason Lewis officially holds ["Dingo API"](https://github.com/dingo/api) license.  
-
----
+Sean Tymon officially holds [JWT Auth](https://github.com/tymondesigns/jwt-auth/) license.  
+Jason Lewis officially holds [Dingo API](https://github.com/dingo/api) license.  
 
 ## License
 This package is licensed under the [BSD 3-Clause license](https://opensource.org/licenses/BSD-3-Clause).

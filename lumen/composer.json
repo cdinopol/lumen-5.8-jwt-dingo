@@ -1,8 +1,12 @@
 {
-    "name": "laravel/lumen",
-    "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
-    "license": "MIT",
+    "name": "cdinopol/lumen-jwt-dingo-boilerplate",
+    "description": "Lumen with jwt and dingo boilerplate.",
+    "keywords": ["framework", "laravel", "lumen", "boilerplate", "api"],
+    "license": "BSD-3-Clause",
+    "authors": [{
+        "name": "Carlo Dinopol",
+        "email": "carlo.dinopol@gmail.com"
+    }],
     "type": "project",
     "require": {
         "php": "^7.3|^8.0",
