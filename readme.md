@@ -28,7 +28,7 @@ cp ../.env .
 php artisan serve
 ```
 
-## Test 
+## Try it out!
 
 1. Register
 ```sh
