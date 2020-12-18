@@ -5,3 +5,6 @@ Homestead.yaml
 .env.*
 composer.lock
 vendor/
+
+# Redis
+data/

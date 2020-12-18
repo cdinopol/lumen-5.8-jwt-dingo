@@ -18,6 +18,12 @@ class AuthController extends BaseController
         $this->jwt = $jwt;
     }
 
+    /**
+     * @api     : auth/login
+     * @param   : email
+     *          : password
+     * @return  : access token object or 401,500
+     */
     public function login(Request $request)
     {
         $this->validate($request, [
@@ -37,36 +43,31 @@ class AuthController extends BaseController
         return $this->respondWithToken($token);
     }
 
+    /**
+     * @api     : auth/refresh
+     * @return  : access token object
+     */
     public function refresh()
     {
         return $this->respondWithToken(Auth::refresh());
     }
 
-    public function register(Request $request)
+    /**
+     * @api     : auth/me
+     * @return  : user object
+     */
+    public function me()
     {
-        $this->validate($request, [
-            'email'    => 'required|email|max:32',
-            'password' => 'required|min:5|max:32',
-        ]);
-
-        $user_data = $request->only('email');
-        $user_data['password'] = Hash::make($request->get('password'));
-
-        try {
-            User::create($user_data);
-            return response('registration success', 201);
-        } catch (\Illuminate\Database\QueryException $e) {
-            $errorCode = $e->errorInfo[1];
-            if($errorCode == 1062){
-                return response('duplicate entry', 409);
-            } else {
-                return response('', 500);
-            }
-        } catch (Exception $e) {
-            return response($e->getMessage(), 500);
-        }
+        $this->user = Auth::userOrFail();
+        return response($this->user->toArray());
     }
 
+    /**
+     * Formats token with expiry time
+     *
+     * @param   : token
+     * @return  : access token object
+     */
     private function respondWithToken($token)
     {
         // get epoch time of expiry

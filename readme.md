@@ -1,159 +1,105 @@
-WEB API USING DOCKERIZED LUMEN + JWT & DINGO
-============================================
+LUMEN JWT + DINGO BOILERPLATE
+=============================
+The LUMEN JWT + DINGO BOILERPLATE package is meant to help you jumpstart your Restful API development. The aim of this is to save time setting up general standard configurations like CORS handling, throttling, versioning, etc. This comes with basic functionalities such as user registration, authentication and other demo functions to showcase different types of requests.
 
-# 1. Installations
+## Quick Start
 
-### 1. Setup Server (Ubuntu 18+)
-- Install minimum dependencies
+1. Download or clone this repo, then navigate inside project root
+2. Delete `.git` folder if you get this code via `git clone` (opt)
+3. Copy `.env.example` and rename to `.env`, then update values necessary
+4. Run
+- Via Docker (requires docker)
 ```sh
-sudo apt-get update && sudo apt-get upgrade -y
-sudo apt-get install -y apache2 git tmux
+docker-compose up --build
 ```
 
-### 2. Download project repo
+- Via Artisan
 ```sh
-cd ~/
-git clone git@github.com:cdinopol/lumen-5.8-jwt-dingo.git
+# Enter lumen directory
+cd lumen/
+
+# Install dependencies
+composer install
+
+# Copy .env to lumnen directory
+cp ../.env .
+
+# Run
+php artisan serve
 ```
 
-### 3. Install Docker (Linux)
+## Try it out!
+
+1. Register
 ```sh
-cd ~/lumen-5.8-jwt-dingo/scripts
-./docker_install.sh
+curl --location --request POST 'http://127.0.0.1:8000/api/users' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "admin@email.com",
+    "password": "password",
+    "name": "admin"
+}'
 ```
 
----
-
-# 2. Start
-
-### 1. You may want to delete .git folder if you get this code via git clone
-### 2. Setup your database
-### 3. Copy .env.example and rename to .env
-```
-DB_CONNECTION=mysql
-DB_HOST=your.db.host
-DB_PORT=3306
-DB_DATABASE=database
-DB_USERNAME=username
-DB_PASSWORD=password
-```
-
-### 4. Build
-```sh
-cd ~/lumen-5.8-jwt-dingo/
-docker-compose build
-```
-
-### 5. Run
-```sh
-cd ~/lumen-5.8-jwt-dingo/
-docker-compose up
-```
-
-- to start (tmux)
-```sh
-cd ~/lumen-5.8-jwt-dingo/scripts/
-tmux_start.sh
-```
-
-- to stop (tmux)
-```sh
-cd ~/lumen-5.8-jwt-dingo/scripts/
-tmux_stop.sh
-```
-
----
-
-# 3. Test It!
-`Use postman to simplify your life.`
-
-
-### 1. Register
-- Post: 
-```
-http://localhost:8000/api/auth/register
-```
-
-- Body form-data:
-```
-email: admin@admin.com
-password: password
-```
-
-- Response:
+Response:
 ```
 Code: 201
 Content:
 registration success
 ```
 
-### 1. Login
-- Post: 
-```
-http://localhost:8000/api/auth/login
-```
-
-- Body form-data:
-```
-email: admin@admin.com
-password: password
+2. Login
+```sh
+curl --location --request POST 'http://127.0.0.1:8000/api/auth/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "admin@admin.com",
+    "password": "password"
+}'
 ```
 
-- Response:
+Response:
 ```
 Code: 200
 Content:
 {
-    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODA4MFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTU5ODQzMDExMSwiZXhwIjoxNTk4NDMzNzExLCJuYmYiOjE1OTg0MzAxMTEsImp0aSI6IjVaUkxaVkJYd2x6UkZvdXUiLCJzdWIiOjIwMDAwMTgsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.iDln2EULa3i1Mz_BPFq9d0dueJ9rW3qScMZzv-1YgKw",
-    "expires_in_epoch": 1598433711,
-    "expires_in_iso": "2020-08-26T09:21:51+0000"
+    "access_token": "<token string>",
+    "expires_in_epoch": <timestamp>,
+    "expires_in_iso": "<datetime iso>"
 }
 ```
 
-### 3. Demo Function (open - no auth)
-- Get: 
-```
-http://localhost:8080/api/user/list
+3. Demo Function (open - no auth)
+```sh
+curl --location --request GET 'http://127.0.0.1:8000/api/users'
 ```
 
-- Response:
+Response:
 ```
 Code: 200
 Content:
 [
-    {
-        "email": "admin@admin.com",
-        "password": "password"
-    }
+    {<user object>}
 ]
 ```
 
-### 4. Demo Function (auth - token required)
-- Get: 
-```
-http://localhost:8080/api/user/me
-```
-
-- Authorization: Bearer {token}
-```
-use the token generated from logging in.
+4. Demo Function (auth - token required)
+```sh
+curl --location --request GET 'http://127.0.0.1:8000/api/auth/me' \
+--header 'Authorization: Bearer <token string>'
 ```
 
-- Response:
+Response:
 ```
 Code: 200
 Content:
-{
-    "email": "admin@admin.com",
-    "password": "password"
-}
+{<user object>}
 ```
 
----
+## Credits
+[Lumen](https://github.com/laravel/lumen) is a trademark of Taylor Otwell.  
+Sean Tymon officially holds [JWT Auth](https://github.com/tymondesigns/jwt-auth/) license.  
+Jason Lewis officially holds [Dingo API](https://github.com/dingo/api) license.  
 
 ## License
-```
-Laravel and Lumen is a trademark of Taylor Otwell
-Sean Tymon officially holds "Laravel JWT" license
-```
-
+This package is licensed under the [BSD 3-Clause license](https://opensource.org/licenses/BSD-3-Clause).
