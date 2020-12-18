@@ -53,6 +53,16 @@ class AuthController extends BaseController
     }
 
     /**
+     * @api     : auth/logout
+     * @return  : access token object
+     */
+    public function logout()
+    {
+        Auth::logout();
+        return response('', 205);
+    }
+
+    /**
      * @api     : auth/me
      * @return  : user object
      */

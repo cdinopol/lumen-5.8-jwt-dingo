@@ -9,17 +9,6 @@ use App\User;
 
 class UserController extends ApiController
 {
-    protected $user;
-
-    public function __construct()
-    {
-        try {
-            $this->user = Auth::userOrFail();
-        } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
-            return response()->json(['user_not_found'], 404);
-        }
-    }
-
     /**
      * List of users (for demo)
      *
@@ -27,7 +16,7 @@ class UserController extends ApiController
      */
     public function index()
     {
-        return $this->respond(User::all());
+        return $this->responseSuccess(User::all());
     }
 
     /**
@@ -49,16 +38,16 @@ class UserController extends ApiController
 
         try {
             User::create($user_data);
-            return response('registration success', 201);
+            return $this->responseSuccess();
         } catch (\Illuminate\Database\QueryException $e) {
             $errorCode = $e->errorInfo[1];
             if($errorCode == 1062){
-                return response('duplicate entry', 409);
+                return $this->responseDuplicate();
             } else {
-                return response($e->getMessage(), 500);
+                return $this->responseFailed($e->getMessage());
             }
         } catch (Exception $e) {
-            return response($e->getMessage(), 500);
+            return $this->responseFailed($e->getMessage());
         }
     }
 }
