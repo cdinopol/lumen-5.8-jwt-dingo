@@ -1,23 +1,39 @@
-LUMEN API BOILERPLATE WITH JWT + DINGO (DOCKERIZED)
+LUMEN API BOILERPLATE (JWT + DINGO)
 ============================================
 
-## Start
+## Quick Start
 
-### 1. You may want to delete .git folder if you get this code via git clone
-### 2. Copy .env.example and rename to .env, then update values necessary
-### 3. Run and build docker
+1. Download or clone this repo, then navigate inside project root
+2. Delete `.git` folder if you get this code via `git clone` (opt)
+3. Copy `.env.example` and rename to `.env`, then update values necessary
+4. Run
+- Via Docker
 ```sh
-cd ~/lumen-jwt-dingo/
 docker-compose up --build
+```
+
+- Via Artisan
+```sh
+# Enter lumen directory
+cd lumen/
+
+# Install dependencies
+composer install
+
+# Copy .env to lumnen directory
+cp ../.env .
+
+# Run
+php artisan serve
 ```
 
 ---
 
-## Test
+## Test 
 
-#### 1. Register
+1. Register
 ```sh
-curl --location --request POST 'http://localhost:8080/api/users' \
+curl --location --request POST 'http://127.0.0.1:8000/api/users' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "email": "admin@email.com",
@@ -26,16 +42,16 @@ curl --location --request POST 'http://localhost:8080/api/users' \
 }'
 ```
 
-- Response:
+Response:
 ```
 Code: 201
 Content:
 registration success
 ```
 
-#### 2. Login
+2. Login
 ```sh
-curl --location --request POST 'http://localhost:8080/api/auth/login' \
+curl --location --request POST 'http://127.0.0.1:8000/api/auth/login' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "email": "admin@admin.com",
@@ -43,7 +59,7 @@ curl --location --request POST 'http://localhost:8080/api/auth/login' \
 }'
 ```
 
-- Response:
+Response:
 ```
 Code: 200
 Content:
@@ -54,12 +70,12 @@ Content:
 }
 ```
 
-#### 3. Demo Function (open - no auth)
+3. Demo Function (open - no auth)
 ```sh
-curl --location --request GET 'http://localhost:8080/api/users'
+curl --location --request GET 'http://127.0.0.1:8000/api/users'
 ```
 
-- Response:
+Response:
 ```
 Code: 200
 Content:
@@ -68,13 +84,13 @@ Content:
 ]
 ```
 
-#### 4. Demo Function (auth - token required)
+4. Demo Function (auth - token required)
 ```sh
-curl --location --request GET 'http://localhost:8080/api/auth/me' \
+curl --location --request GET 'http://127.0.0.1:8000/api/auth/me' \
 --header 'Authorization: Bearer <token string>'
 ```
 
-- Response:
+Response:
 ```
 Code: 200
 Content:
@@ -84,9 +100,9 @@ Content:
 ---
 
 ## Credits
-[Lumen](https://github.com/laravel/lumen) is a trademark of Taylor Otwell
-Sean Tymon officially holds ["JWT Auth"](https://github.com/tymondesigns/jwt-auth/) license
-Jason Lewis officially holds ["Dingo API"](https://github.com/dingo/api) license
+[Lumen](https://github.com/laravel/lumen) is a trademark of Taylor Otwell.  
+Sean Tymon officially holds ["JWT Auth"](https://github.com/tymondesigns/jwt-auth/) license.  
+Jason Lewis officially holds ["Dingo API"](https://github.com/dingo/api) license.  
 
 ---
 
